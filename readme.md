@@ -164,3 +164,9 @@ hi
 ```
 
 If Claude responds, your Claude Code + Gemini setup is fully operational and ready to use!
+
+---
+
+## 10. Open Source
+
+This setup relies on tools like `claude-code-router`, which are built on open-source principles. Feel free to contribute, report issues, or suggest improvements to the open-source community that makes these integrations possible!
