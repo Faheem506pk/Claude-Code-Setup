@@ -1,6 +1,6 @@
 # Free Claude Code Setup with Google Gemini
 
-A complete setup guide for configuring Claude Code with Gemini models using `claude-code` and `claude-code-router`.
+A complete setup guide for configuring Claude Code with Gemini models using `claude-code` and `claude-code-router`. This guide includes instructions for both **Windows (PowerShell)** and **Ubuntu/Linux (Bash)**.
 
 ---
 
@@ -8,14 +8,23 @@ A complete setup guide for configuring Claude Code with Gemini models using `cla
 
 ### Verify Node.js Installation
 
-Open PowerShell and run:
+Check if Node.js is installed (Version 18.x or higher is required).
 
+**Windows (PowerShell):**
 ```powershell
 node --version
 ```
+*If not installed, download the LTS release from [nodejs.org](https://nodejs.org).*
 
-- If the version is 18.x or higher, you're good to continue.
-- If not, download and install the latest LTS release from [nodejs.org](https://nodejs.org).
+**Ubuntu/Linux (Bash):**
+```bash
+node --version
+```
+*If not installed, you can install it via NodeSource:*
+```bash
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
 
 ---
 
@@ -30,11 +39,16 @@ node --version
 
 ## 3. Install Required CLI Tools
 
-Open PowerShell (Run as Administrator) and execute:
-
+**Windows (PowerShell - Run as Administrator):**
 ```powershell
 npm install -g @anthropic-ai/claude-code @musistudio/claude-code-router
 ```
+
+**Ubuntu/Linux:**
+```bash
+sudo npm install -g @anthropic-ai/claude-code @musistudio/claude-code-router
+```
+*(If you use `nvm` or have configured npm for global installs without sudo, you can omit `sudo`.)*
 
 This installs both Claude Code and the router globally on your system.
 
@@ -42,24 +56,34 @@ This installs both Claude Code and the router globally on your system.
 
 ## 4. Create Configuration Directories
 
-Run the following in a normal PowerShell window:
-
+**Windows (PowerShell):**
 ```powershell
 mkdir $HOME/.claude-code-router
 mkdir $HOME/.claude
+```
+
+**Ubuntu/Linux (Bash):**
+```bash
+mkdir -p ~/.claude-code-router ~/.claude
 ```
 
 ---
 
 ## 5. Create the Router Configuration File
 
-Since Windows does not support `cat << EOF` syntax easily in PowerShell, create the configuration file using Notepad:
-
+**Windows (PowerShell):**
+Create the file using Notepad:
 ```powershell
 notepad $HOME/.claude-code-router/config.json
 ```
 
-Paste the following JSON configuration exactly as shown:
+**Ubuntu/Linux (Bash):**
+Create the file using Nano:
+```bash
+nano ~/.claude-code-router/config.json
+```
+
+**Paste the following JSON configuration exactly as shown:**
 
 ```json
 {
@@ -92,26 +116,35 @@ Paste the following JSON configuration exactly as shown:
 }
 ```
 
-Save and close Notepad once done.
+Save and close the file (`Ctrl+O`, `Enter`, then `Ctrl+X` for Nano).
 
 ---
 
 ## 6. Configure Environment Variable (API Key)
 
-Run PowerShell as Administrator to set the system-wide environment variable:
-
+**Windows (PowerShell - Run as Administrator):**
 ```powershell
 [System.Environment]::SetEnvironmentVariable('GOOGLE_API_KEY', 'YOUR_API_KEY_HERE', 'User')
 ```
+*(Replace `YOUR_API_KEY_HERE` with the actual key from Step 2. Then close and reopen PowerShell.)*
 
-*(Replace `YOUR_API_KEY_HERE` with the actual key from Step 2)*
+**Ubuntu/Linux (Bash):**
+```bash
+echo 'export GOOGLE_API_KEY="YOUR_API_KEY_HERE"' >> ~/.bashrc
+source ~/.bashrc
+```
+*(Replace `YOUR_API_KEY_HERE` with the actual key from Step 2.)*
 
 ### Verify the Key
 
-Close the current PowerShell window, open a **new** window, and run:
-
+**Windows:**
 ```powershell
 echo $env:GOOGLE_API_KEY
+```
+
+**Ubuntu/Linux:**
+```bash
+echo $GOOGLE_API_KEY
 ```
 
 If the key appears, the environment variable is configured correctly.
@@ -122,10 +155,9 @@ If the key appears, the environment variable is configured correctly.
 
 Run the following commands to ensure everything is set up correctly:
 
-```powershell
+```bash
 claude --version
 ccr version
-echo $env:GOOGLE_API_KEY
 ```
 
 If all commands return output without errors, the setup is successful.
@@ -136,9 +168,9 @@ If all commands return output without errors, the setup is successful.
 
 ### Start the Router (Terminal 1)
 
-Open a new PowerShell window and start the Claude Code Router:
+Open a new terminal window and start the Claude Code Router:
 
-```powershell
+```bash
 ccr start
 ```
 
@@ -146,9 +178,9 @@ Wait until you see: `✔ Service started successfully`
 
 ### Use Claude Code (Terminal 2)
 
-Open another PowerShell window, navigate to your project directory, and launch Claude Code through the router:
+Open another terminal window, navigate to your project directory, and launch Claude Code through the router:
 
-```powershell
+```bash
 cd your-project-folder
 ccr code
 ```
